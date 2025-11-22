@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import sqlite3
-import random
 import os
 
 DATABASE = "/nfs/demo.db"
@@ -31,49 +30,37 @@ def init_db():
 
 
 # ===========================
-#  Generate Warhammer Data
+#  Generate Selenium-Friendly Warhammer Data
 # ===========================
 def generate_test_data(num_records):
     db = connect_db()
 
-    factions = [
-        "Space Marines",
-        "Astra Militarum",
-        "Tyranids",
-        "Necrons",
-        "Orks",
-        "Adeptus Mechanicus",
-        "Chaos",
-        "Tau Empire",
-        "Eldar"
-    ]
-
-    print("\n⚔️ The Forge of Data is Lit — Generating models for the battlefield...\n")
+    print("\n⚔️ Generating test models for Selenium…\n")
 
     for i in range(num_records):
-        model = f"Model Squad {i+1}"
-        faction = random.choice(factions)
-        painted = random.randint(0, 1)
-        owned = random.randint(1, 50)
+        model = f"Test Model {i}"
+        faction = f"Faction {i}"
+        painted = 1  # Always painted for simplicity
+        owned = 10   # Arbitrary number
 
         db.execute(
             "INSERT INTO warhammer (model_name, faction, painted, models_owned) VALUES (?, ?, ?, ?)",
             (model, faction, painted, owned)
         )
 
-        print(f"  ✔ Deployed {model} for {faction} — "
-              f"{'Painted' if painted else 'Unpainted'}, {owned} models owned.")
+        print(f"  ✔ Added {model} ({faction}) — Painted: {painted}, Owned: {owned}")
 
     db.commit()
     db.close()
 
-    print(f"\n🛡️ Deployment Complete — {num_records} new entries logged in the Chapter Records.\n")
+    print(f"\n🛡️ Test data generation complete — {num_records} entries added.\n")
 
 
 # ===========================
 #  Main Execution
 # ===========================
 if __name__ == "__main__":
+    # Ensure database folder exists
     if not os.path.exists(os.path.dirname(DATABASE)):
         os.makedirs(os.path.dirname(DATABASE), exist_ok=True)
 
