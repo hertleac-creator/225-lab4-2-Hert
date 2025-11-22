@@ -10,8 +10,8 @@ auspexFilter?.addEventListener('input', () => {
   const query = auspexFilter.value.toLowerCase();
 
   for (const row of dataRows.querySelectorAll('tr')) {
-    const designation = row.querySelector('.name')?.textContent.toLowerCase() || '';
-    const vox = row.querySelector('.phone')?.textContent.toLowerCase() || '';
+    const designation = row.querySelector('.Model Name')?.textContent.toLowerCase() || '';
+    const vox = row.querySelector('.Faction')?.textContent.toLowerCase() || '';
 
     // If the row does not match the search, it is purged from view
     row.style.display = (designation.includes(query) || vox.includes(query))
@@ -32,6 +32,6 @@ editChamber?.addEventListener('show.bs.modal', (ev) => {
   const activator = ev.relatedTarget;
 
   document.getElementById('edit-id').value    = activator.getAttribute('data-id');
-  document.getElementById('edit-name').value  = activator.getAttribute('data-name');
-  document.getElementById('edit-phone').value = activator.getAttribute('data-phone');
+  document.getElementById('edit-Model Name').value  = activator.getAttribute('data-Model Name');
+  document.getElementById('edit-Faction').value = activator.getAttribute('data-Faction');
 });
