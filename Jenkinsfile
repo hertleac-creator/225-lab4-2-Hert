@@ -4,10 +4,10 @@ pipeline {
     environment {
         // Sacred credentials and identifiers
         DOCKER_CREDENTIALS_ID = 'roseaw-dockerhub'
-        DOCKER_IMAGE = 'cithit/hibbarkm'  //<<-- Replace with your MiamiID–blessed image name
+        DOCKER_IMAGE = 'cithit/hertleac'  //<<-- Replace with your MiamiID–blessed image name
         IMAGE_TAG = "build-${BUILD_NUMBER}"
-        GITHUB_URL = 'https://github.com/Hibbarkm/225-lab5-1b.git'
-        KUBECONFIG = credentials('hibbarkm-225') 
+        GITHUB_URL = 
+        KUBECONFIG = credentials('hertleac-225') 
     }
 
     stages {
