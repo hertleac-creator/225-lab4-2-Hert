@@ -1,21 +1,26 @@
+# Use a lightweight Python image
 FROM python:3.9-slim
 
-# Install dependencies
-RUN apt-get clean && apt-get -y update && apt-get -y install nginx python3-dev build-essential nfs-common && rm -rf /var/lib/apt/lists/*
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y python3-dev build-essential nfs-common && \
+    rm -rf /var/lib/apt/lists/*
 
-# Create mount point for NFS
-RUN mkdir -p /nfs
+# Set working directory
+WORKDIR /app
 
-COPY /data/demo.db /nfs
+# Copy Python dependencies first for caching
+COPY requirements1.txt .
+RUN pip install --no-cache-dir -r requirements1.txt
 
-# Copy application files
+# Copy all application files into /app
 COPY . .
 
-# Install Python dependencies
-RUN pip install -r requirements1.txt
+# Create mount point for NFS (will be overridden by Kubernetes)
+RUN mkdir -p /nfs
 
-# Expose port 5000 for the application
+# Expose Flask port
 EXPOSE 5000
 
-# Command to run the application
-CMD ["python3", "main.py"] 
+# Default command to run Flask
+CMD ["python3", "main.py"]
